@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block carousel %}{% endblock %}
+
+{% block content %}
+	<div class="text-center mb-5">
+		<h3>Nos meilleures ventes</h3>
+		<p>Découvrez les articles les plus vendus.</p>
+	</div>
+
+	<!-- Three columns of text below the carousel -->
+	<div class="row" style="height:275px;">
+
+		{% set plimit = 3 %}
+		{% set pageSlideMax = (products|length / plimit) %}
+		{% if products|length != 0 %}
+			<div class="col-lg-12">
+				<div id="productsCarousel" class="carousel slide" data-ride="carousel">
+
+					<ol class="carousel-indicators">
+						{% for i in range(0, products|length, 1) %}
+							<li data-target="#productsCarousel" data-slide-to="{{ i }}" {% if i == 0 %} class="active" {% endif %}></li>
+						{% endfor %}
+					</ol>
+
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<div class="row">
+						{% for product in products %}
+							<div class="col-lg-4">
+								<img src="/uploads/{{ product.illustration }}" alt="{{ product.name }}" class="img-fluid bd-placeholder-img rounded-circle" width="140" height="140"></a>
+								<h5>{{ product.name }}</h5>
+								<span class="product-subtitle">{{ product.subtitle }}</span><br/>
+								<span class="product-price">{{ (product.price /100) | number_format(2, ',' , '.') }}
+									€</span>
+								<p>
+									<a class="btn btn-light btn-sm mt-3" role="button" href="{{ path('product', { 'slug' : product.slug }) }}">Découvrir &raquo;</a>
+								</p>
+
+							</div>
+							{% if loop.index % plimit == 0 and not loop.last %}
+								</div><!-- row -->
+								</div><!-- item active -->
+								<div class="carousel-item">
+								<div class="row">
+							{% endif %}
+							{% if loop.last %}
+								</div> <!-- row -->
+								</div><!-- item -->
+							{% endif %}
+						{% endfor %}
+					</div><!-- carousel-inner -->
+						<a class="carousel-control-prev" href="#productsCarousel" role="button" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a>
+						<a class="carousel-control-next" href="#productsCarousel" role="button" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a>
+				</div><!-- productsCarousel -->
+			</div><!-- col-lg-12 -->
+		{% endif %}
+	</div>
+<!-- /.row -->
+
+
+<!-- START THE FEATURETTES -->
+
+<hr class="featurette-divider">
+
+<div class="row featurette">
+	<div class="col-md-7">
+		<h2 class="featurette-heading">Une équipe de professionnel 
+		<span class="text-muted">au grand savoi-faire.</span>
+		</h2>
+		<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+	</div>
+	<div class="col-md-5">
+		<img src="{{ asset('assets/img/first.jpg') }}" class="img-fluid" alt="un savoir-faire Français">
+	</div>
+</div>
+
+<hr class="featurette-divider">
+
+<div class="row featurette">
+	<div class="col-md-7 order-md-2">
+		<h2 class="featurette-heading">Venez nous rencontre dans <span>
+			<span class="text-muted">boutique Sếp péo</span>
+		</h2>
+		<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+	</div>
+	<div class="col-md-5 order-md-1">
+		<img src="{{ asset('assets/img/second.jpg') }}" class="img-fluid" alt="une boutique ouverte toute l'année">
+	</div>
+</div>
+
+<hr class="featurette-divider">
+
+
+<!-- /END THE FEATURETTES -->
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

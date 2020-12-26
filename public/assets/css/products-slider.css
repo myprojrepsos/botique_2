@@ -1,0 +1,22 @@
+#productsCarousel .carousel-inner .active.left {
+  left: -33%;
+}
+#productsCarousel .carousel-inner .active.right {
+  left: 33%;
+}
+#productsCarousel .carousel-inner .next {
+  left: 33%;
+}
+#productsCarousel .carousel-inner .prev {
+  left: -33%;
+}
+#productsCarousel .carousel-control.left {
+  background-image: none;
+}
+#productsCarousel .carousel-control.right {
+  background-image: none;
+}
+#productsCarousel .carousel-inner .item {
+  background: white;
+  transition: all ease 0.5s;
+}

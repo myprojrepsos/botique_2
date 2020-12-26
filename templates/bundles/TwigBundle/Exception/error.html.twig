@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page introuvable - Boutique Sếp péo
+{% endblock %}
+
+{% block content %}
+	<div class="block-small">
+		<h2 style="color: red;">Oups !</h2>
+		La page demandée n'existe plus !
+		<br/>
+		Nous vous proposons de naviguer vers nos pages catégories ou d'utiliser notre moteur de recherche pour trouver le produit que vous désirez.<br/>
+		
+        <br/>
+        <div class="text-right">
+			<a href="{{ path('home') }}">
+				<i class="far fa-hand-point-right"></i>
+				Revenir à l'accueil</a>
+		</div>
+	</div>
+{% endblock %}

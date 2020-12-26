@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié - Boutique Sếp péo
+{% endblock %}
+
+{% block content %}
+	<div class="block-small">
+		{% for label, messages in app.flashes(['success', 'warning']) %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+		<form method="post">
+			<h1>Réinitialiser votre mot de passe</h1>
+			<hr>
+			<label for="inputEmail">Votre email</label>
+			<input type="email" name="email" id="inputEmail" class="form-control mb-3" required autofocus>
+
+			<button class="btn btn-block btn-sm btn-light" type="submit">
+				Valider
+			</button>
+			<hr>
+			<p class="text-center">Ou souhaitez-vous
+				<a href="{{ path('app_login') }}">vous connecter
+				</a>?
+			</p>
+		</form>
+	</div>
+{% endblock %}

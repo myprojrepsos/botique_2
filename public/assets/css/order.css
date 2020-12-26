@@ -1,0 +1,19 @@
+.form-check {
+  background-color: #fadde4;
+  border-radius: 15px;
+  padding: 15px 65px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  color: black;
+}
+
+.btn-light {
+  border-radius: 15px;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}

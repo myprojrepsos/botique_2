@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}^ _ ^ Merci - Boutique Sếp péo{% endblock %}
+
+{% block content %}
+    <h2>Confirmation de ma commande</h2>
+    <hr>
+    <p>
+        Bonjour <b>{{ order.user.firstname }}</b>,<br/><br/>
+        Nous vous remercions pour votre commande n°<b>{{ order.reference }}</b>.<br/>
+        Une confirmation vient de vous être envoyée par email à l'adresse <b>{{ order.user.email }}</b>.<br/>
+        Votre commande sera livrée par <b>{{ order.carrierName }}</b> à l'adresse suivante: <br/>
+        <b>{{ order.delivery|raw }}</b>
+        <hr>
+        Pour suivre votre commande, rendez-vous dans votre <a href="{{ path('account_order') }}">compte</a>.
+    </p>
+{% endblock %}

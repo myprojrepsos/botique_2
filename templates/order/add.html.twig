@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block javascriptsAPI %}
+	<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block title %}On récaptile . . . - Boutique Sếp péo
+{% endblock %}
+
+
+{% block content %}
+	<h2>Mon Récapitulatif</h2>
+	<p>Vérifiez vos informations avant de payer votre commande.</p>
+	<hr>
+	<div class="row mb-3">
+
+		<div class="col-md-6">
+			<div class="text-center">
+				<b>Ma commande</b>
+			</div>
+			<hr>
+			{% set total_produits = null %}
+			{% set total_prix = null %}
+			{% for product in cart %}
+				<div class="row">
+					<div class="col-2">
+						<img src="/uploads/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="75px">
+					</div>
+					<div class="col-6 my-auto">
+						<i>
+							<a href="{{ path('product', { 'slug' : product.product.slug }) }}">
+								<b>{{ product.product.name }}</b>
+							</a><br/>
+							<small>{{ product.product.subtitle}}</small>
+						</i>
+					</div>
+					<div class="col-2 my-auto">
+						<i>x
+							{{ product.quantity }}</i>
+					</div>
+					<div class="col-2 my-auto">
+						<i>{{ (product.quantity * product.product.price / 100)|number_format(2, ',', '.') }}
+							€</i>
+					</div>
+				</div>
+				{% set total_produits = total_produits + (1 * product.quantity) %}
+				{% set total_prix = total_prix + (product.product.price * product.quantity) %}
+			{% endfor %}
+			<hr>
+			<div class="text-right">
+				<i>
+					<b>Nombre de produit:
+						{{ total_produits }}
+						<br/>Sous-total:
+						{{ (total_prix / 100)|number_format(2, ',', '.') }}
+						€
+					</b>
+				</i>
+			</div>
+
+		</div>
+
+		<div class="col-md-6">
+			<div class="text-center">
+				<b>Mon adresse de livraison</b>
+			</div>
+			<hr>
+			<div class="form-check">
+				<i class="fas fa-user"></i>
+				{{ delivery.firstName|raw }}
+				{{ delivery.lastName }}<br/>
+				<i class="fas fa-phone-alt"></i>
+				{{ delivery.phone }}<br/>
+
+				{% if (delivery.company) %}
+					<i class="fas fa-building"></i>
+					{{ delivery.company }}<br/>
+				{% endif %}
+
+				<i class="fas fa-map-marker-alt"></i>
+				{{ delivery.address }}<br/>
+				&nbsp;&nbsp;
+				{{ delivery.postal }}
+				-
+				{{ delivery.city }}
+				-
+				{{ delivery.country }}
+			</div>
+			<div class="text-center mt-3">
+				<b>Mon transporteur</b>
+			</div>
+			<hr>
+			<div class="form-check">
+				<i class="fas fa-truck"></i>
+				{{ carrier.name }}<br/>
+				{{ carrier.description }}<br/>
+				{{ (carrier.price / 100)|number_format(2, ',', '.') }}
+				€
+			</div>
+			<hr>
+			<div class="text-right mb-2">
+				<i>
+					<b>Livraison:
+						{{ (carrier.price / 100)|number_format(2, ',', '.') }}
+						€
+					</b>
+					<br/>
+					<b>Total:
+						{{ ((total_prix / 100) + (carrier.price / 100))|number_format(2, ',', '.') }}
+						€</b>
+				</i>
+				<hr>
+				<a class="btn btn-light" id="checkout-button">Payer
+					{{ ((total_prix / 100) + (carrier.price / 100))|number_format(2, ',', '.') }}
+					€</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('assets/css/order.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript">
+		var stripe = Stripe("pk_test_51HxhWmGDC9L79CFu4F2cktXIiUqBKoX6d12X5VdTQFlqPZZvp0uyICSftbuGPDk8KRJtbvsouBwifztwziedHXcN00upnYeAiq");
+		var checkoutButton = document.getElementById("checkout-button");
+		checkoutButton.addEventListener("click", function () {
+			fetch("/commande/create-session/{{ reference }}", {
+				method: "POST"})
+				.then(function (response) {
+					return response.json();
+				})
+				.then(function (session) {
+					if (session.error == 'order') {
+						//redirection
+						window.location.replace('{{ path('order') }}');
+					} else {
+					return stripe.redirectToCheckout({sessionId: session.id});
+					}
+				})
+				.then(function (result) {
+				// If redirectToCheckout fails due to a browser or network
+				// error, you should display the localized error message to your
+				// customer using error.message.
+					if (result.error) {
+						alert(result.error.message);
+					}
+				})
+				.catch(function (error) {
+					console.error("Error:", error);
+				});
+		});
+	</script>
+{% endblock %}

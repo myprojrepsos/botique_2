@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Se connecter - Boutique Sếp péo
+{% endblock %}
+
+{% block content %}
+	<div class="block-small">
+		<form method="post">
+
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
+
+			<!-- message de ResetPassword -->
+			{% for label, messages in app.flashes(['success', 'warning']) %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }}">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+			<!-- -->
+
+			{% if app.user %}
+				<div class="mb-3">
+					You are logged in as
+					{{ app.user.username }},
+					<a href="{{ path('app_logout') }}">Logout</a>
+				</div>
+			{% endif %}
+
+			<h1>Merci de vous connecter</h1>
+			<hr>
+			<label for="inputEmail">Email</label>
+			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+			<label for="inputPassword">Mot de passe</label>
+			<input type="password" name="password" id="inputPassword" class="form-control" required>
+
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+			<br>
+			<button class="btn btn-block btn-sm btn-light" type="submit">
+				Se connecter
+			</button>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<p>
+						<a href="{{ path('reset_password') }}">Mot de passe oublié ?
+						</a>
+					</p>
+				</div>
+				<div class="col-md-6">
+					<p class="text-right">Ou souhaitez-vous
+						<a href="{{ path('register') }}">créer un compte
+						</a>?
+					</p>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

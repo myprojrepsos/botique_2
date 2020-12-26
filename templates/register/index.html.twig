@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block content %}
+	<h1>Inscription</h1>
+	<hr>
+
+	{% if notification %}
+
+		<div class="{{ type_noti }}">{{ notification }}</div>
+		<hr>
+		
+	{% endif %}
+
+	{{ form_start(form) }}
+	<div class="row mb-3">
+		<div class="col-md-6">{{ form_row(form.lastname) }}</div>
+		<div class="col-md-6">{{ form_row(form.email) }}</div>
+		<div class="col-md-6">{{ form_row(form.firstname) }}</div>
+		<div class="col-md-6">{{ form_row(form.password) }}</div>
+		<div class="col-md-6"></div>
+		<div class="col-md-6">{{ form_row(form.submit) }}</div>
+	</div>
+	{{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte - Boutique Sếp péo
+{% endblock %}
+
+{% block content %}
+	<h2>Mon compte</h2>
+	Bienvenue
+	<b>{{ app.user.firstname }}</b>
+	!
+	<br/>
+
+	{% if is_granted('ROLE_ADMIN') %}
+		Vous êtes un administrateur,
+		<a href="/admin">accédez au backoffice</a>
+		?
+	{% endif %}
+
+	<hr>
+
+	<div class="row">
+		<div class="action text-center">
+			<div class="account-item account-style">
+				<a href="{{ path('account_password') }}">
+					<img src="{{ asset('assets/img/login.png') }}" alt="Modifier mon mot de passe"><br/>
+					Modifier mon mot de passe</a>
+			</div>
+		</div>
+		<div class="action text-center">
+			<div class="account-item account-style">
+				<a href="{{ path('account_address')}}">
+				<img src="{{ asset('assets/img/address-book.png') }}" alt="Gérer mes adresses"><br/>
+					Gérer mes adresses</a>
+			</div>
+		</div>
+		<div class="action text-center">
+			<div class="account-item account-style">
+				<a href="{{ path('account_order')}}">
+				<img src="{{ asset('assets/img/shopping-bag.png') }}" alt="Mes commandes"><br/>
+					Mes commandes</a>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}

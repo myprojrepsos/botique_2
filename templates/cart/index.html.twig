@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier - Boutique Sếp péo
+{% endblock %}
+
+{% block content %}
+	<h2>Mon panier</h2>
+
+	{% if cart|length > 0 %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col"></th>
+					<th scope="col">Produit(s)</th>
+					<th scope="col">Quantité</th>
+					<th scope="col">Prix</th>
+					<th scope="col">Total</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set total_produits = null %}
+				{% set total_prix = null %}
+				{% for product in cart %}
+					<tr>
+						<td>
+							<img src="/uploads/{{ product.product.illustration }}" alt="{{ product.product.name }}" height="75px">
+						</td>
+						<td>
+							<a href="{{ path('product', { 'slug' : product.product.slug }) }}">
+								<b>{{ product.product.name }}</b>
+							</a><br/>
+							<small>{{ product.product.subtitle}}</small>
+						</td>
+						<td>
+							<a href="{{ path('decrease-item', {'id' : product.product.id }) }}">
+								<i class="fas fa-minus"></i>
+							</a>
+							x
+							{{ product.quantity }}
+							<a href="{{ path('add-to-cart', {'id' : product.product.id }) }}">
+								<i class="fas fa-plus"></i>
+							</a>
+						</td>
+						<td>
+							{{ (product.product.price / 100)|number_format(2, ',', '.') }}€
+						</td>
+						<td>
+							{{ (product.product.price * product.quantity / 100)|number_format(2, ',', '.') }}€
+						</td>
+						<td>
+							<a href="{{ path('delete-item', {'id' : product.product.id }) }}">
+								<i class="fas fa-trash-alt"></i>
+							</a>
+						</td>
+					</tr>
+					{% set total_produits = total_produits + (1 * product.quantity) %}
+					{% set total_prix = total_prix + (product.product.price * product.quantity) %}
+				{% endfor %}
+			</tbody>
+		</tbody>
+	</table>
+
+	<div class="text-right mb-5">
+		<b>Nombre de produit:
+			{{ total_produits }}</b>
+		<br/>
+		<b>Sous-total:
+			{{ (total_prix / 100)|number_format(2, ',', '.') }}
+			€</b>
+		<br/>
+		<a href="{{ path('order') }}" class="btn btn-sm btn-light float-right">Valider mon panier</a>
+	</div>
+{% else %}
+	<hr>
+	<p>
+		<b>Votre panier est vide . . .</b>
+	</p>
+{% endif %}{% endblock %}
