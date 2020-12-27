@@ -101,7 +101,8 @@ a:hover {
 
 .account-style {
   background-color: #ffcccc;
-  padding: 70px;
+  padding: 60px;
+  height:100%;
 }
 
 .account-style a {
@@ -122,21 +123,18 @@ a:hover {
 .action {
   flex: 20%;
   margin: 20px;
-  height: 250px;
 }
 
 @media screen and (max-width: 700px) {
   .action {
     flex: 50%;
     margin: 20px;
-    height: 250px;
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1193px) {
   .action {
     flex: 30%;
     margin: 20px;
-    height: 250px;
   }
 }
