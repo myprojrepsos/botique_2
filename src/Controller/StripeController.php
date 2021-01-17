@@ -11,6 +11,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Dotenv\Dotenv;
+
+
 
 class StripeController extends AbstractController
 {
@@ -55,7 +58,11 @@ class StripeController extends AbstractController
             'quantity' => 1,
         ];
 
-        Stripe::setApiKey('sk_test_51HxhWmGDC9L79CFuVFv6PfMjzurjB0wKVIJ52LPI9WsJvulL2P2RdjRVW3zAYKUJKdUT5RCV92NyDuS1kK4ZifUE00UOX1Vip9');
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__.'/../../.env');
+
+        $stripe_api = $_ENV["STRIPE_TOKEN"];
+        Stripe::setApiKey($stripe_api);
 
         $checkout_session = Session::create([
             'customer_email' => $this->getUser()->getEmail(),

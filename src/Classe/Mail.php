@@ -4,16 +4,18 @@ namespace App\Classe;
 
 use Mailjet\Client;
 use Mailjet\Resources;
+use Symfony\Component\Dotenv\Dotenv;
 
 class Mail
 {
-    private $api_key = 'c876f48d953087f2418767f9a2d721a6';
 
-    private $api_key_secret = '44a7c58301243b3eeafe30f9a73540fe';
+    //private $api_key = ;
+
+    //private $api_key_secret = ;
 
     public function send($to_email, $to_name, $subject, $content)
     {
-        $mj = new Client($this->api_key, $this->api_key_secret, true, ['version' => 'v3.1']);
+        $mj = new Client($this->getApiKey(), $this->getApiSecret(), true, ['version' => 'v3.1']);
         $body = [
             'Messages' => [
                 [
@@ -38,5 +40,17 @@ class Mail
         ];
         $response = $mj->post(Resources::$Email, ['body' => $body]);
         $response->success();
+    }
+
+    private function getApiKey(){
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__.'/../../.env');
+        return $_ENV["MAILJET_KEY"];
+    }
+
+    private function getApiSecret(){
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__.'/../../.env');
+        return $_ENV["MAILJET_KEY_SECRET"];
     }
 }
