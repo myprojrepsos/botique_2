@@ -19,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\CrudUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Form\Type\TextEditorType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -26,11 +27,13 @@ class OrderCrudController extends AbstractCrudController
 {
     private $entityManager;
     private $crudUrlGeneration;
+    private $adminUrlGenerator;
 
-    public function __construct(EntityManagerInterface $entityManager, CrudUrlGenerator $crudUrlGenerator)
+    public function __construct(EntityManagerInterface $entityManager, CrudUrlGenerator $crudUrlGenerator, AdminUrlGenerator $adminUrlGenerator)
     {
         $this->entityManager = $entityManager;
         $this->crudUrlGeneration = $crudUrlGenerator;
+        $this->adminUrlGenerator = $adminUrlGenerator;
 
     }
 
@@ -69,7 +72,7 @@ class OrderCrudController extends AbstractCrudController
 
         $this->addFlash('notice', "<span style='color:blue;'><b>La commande n°" . $order->getReference() . " est bien <u>en cours de préparation</u></b></span>");
         
-        $url = $this->crudUrlGeneration->build()
+        $url = $this->adminUrlGenerator
                     ->setController(OrderCrudController::class)
                     ->setAction('index')
                     ->generateUrl();
@@ -85,7 +88,7 @@ class OrderCrudController extends AbstractCrudController
 
         $this->addFlash('notice', "<span style='color:orange;'><b>La commande n°" . $order->getReference() . " est bien <u>en cours de livraison</u></b></span>");
         
-        $url = $this->crudUrlGeneration->build()
+        $url = $this->adminUrlGenerator
                     ->setController(OrderCrudController::class)
                     ->setAction('index')
                     ->generateUrl();
@@ -101,7 +104,7 @@ class OrderCrudController extends AbstractCrudController
 
         $this->addFlash('notice', "<span style='color:green;'><b>La commande n°" . $order->getReference() . " est bien <u>complete</u></b></span>");
         
-        $url = $this->crudUrlGeneration->build()
+        $url = $this->adminUrlGenerator
                     ->setController(OrderCrudController::class)
                     ->setAction('index')
                     ->generateUrl();
@@ -117,7 +120,7 @@ class OrderCrudController extends AbstractCrudController
 
         $this->addFlash('notice', "<span style='color:red;'><b>La commande n°" . $order->getReference() . " est bien <u>annulée</u></b></span>");
         
-        $url = $this->crudUrlGeneration->build()
+        $url = $this->adminUrlGenerator
                     ->setController(OrderCrudController::class)
                     ->setAction('index')
                     ->generateUrl();
