@@ -3,7 +3,4 @@ easy_admin:
         assets:
             css:
                 - '/public/assets/css/easyadmin.css'
-    resource: '@EasyAdminBundle/Controller/EasyAdminController.php'
-    prefix: /admin
-    type: annotation
   
