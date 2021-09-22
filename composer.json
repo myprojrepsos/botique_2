@@ -91,7 +91,7 @@
             "@auto-scripts"
         ],
         "compile":[
-            "php bin/console ass:ins -e prod --symlink"
+            "php bin/console ass:ins -e prod"
         ]
     },
     "conflict": {
