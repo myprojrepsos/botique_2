@@ -137,7 +137,7 @@ class OrderCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->setFormTypeOption('disabled','disabled'),
-            DateTimeField::new('createdAt', 'Passée le')->setFormat('hh:mm:ss dd-MM-yyyy'),
+            DateTimeField::new('createdAt', 'Passée le')->setFormat('hh:mm:ss dd-MM-yyyy'),//here
             TextField::new('reference', 'Commande n°'),
             TextField::new('user.fullname', 'Client'),
             TextEditorField::new('delivery', 'Adresse de livraison')->onlyOnDetail(),

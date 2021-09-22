@@ -31,7 +31,7 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         $routeBuilder = $this->adminUrlGenerator;
-
+        echo "testttt";
         return $this->redirect($routeBuilder->setController(OrderCrudController::class)->generateUrl());
     }
 
